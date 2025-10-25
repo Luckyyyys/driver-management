@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- IMPORT CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/schedule.css" />
+    <!-- ICONIFY CDN -->
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+    <!-- MAP API -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"
+    />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+    <title>Schedule</title>
+  </head>
+  <body>
+    <!-- NAVBAR (Reusable when using backend via PHP include) -->
+    <nav id="sidebar" class="sidebar">
+      <!-- LOGO -->
+      <div>
+        <img src="assets/logo.png" alt="" />
+      </div>
+      <p>MENU</p>
+      <ul>
+        <li onclick="this.querySelector('a').click()">
+          <span
+            class="iconify"
+            data-icon="material-symbols:dashboard-rounded"
+          ></span
+          ><a href="dashboard.html"> Dashboard</a>
+        </li>
+
+        <li class="active" onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="uis:schedule"></span>
+          <a href="schedule.html"> Schedule</a>
+        </li>
+
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="ic:round-message"></span
+          ><a href="message.html"> Messages</a>
+        </li>
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="solar:wallet-bold"></span
+          ><a href="wallet.html"> My Wallet</a>
+        </li>
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="iconamoon:profile-fill"></span
+          ><a href="profile.html"> Profile</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="main-content">
+      <div class="schedule-header">
+        <div class="schedule-text-header">
+          <h2>Schedule</h2>
+          <p>Manage your bookings and vehicle assignments</p>
+        </div>
+      </div>
+
+      <!-- PILL TOGGLE -->
+      <div class="pill-toggle-container">
+        <div class="pill-toggle-group">
+          <input
+            type="radio"
+            id="bookings-tab"
+            name="schedule-tab"
+            value="bookings"
+            checked
+          />
+          <label for="bookings-tab" class="pill-tab">Bookings</label>
+
+          <input
+            type="radio"
+            id="ongoing-tab"
+            name="schedule-tab"
+            value="ongoing"
+          />
+          <label for="ongoing-tab" class="pill-tab">Ongoing</label>
+
+          <input
+            type="radio"
+            id="history-tab"
+            name="schedule-tab"
+            value="history"
+          />
+          <label for="history-tab" class="pill-tab">History</label>
+        </div>
+      </div>
+
+      <div class="bookings-container" id="bookings-section">
+        <div class="bookings-header">
+          <h3>Available Bookings</h3>
+          <p>Browse and accept client bookings</p>
+        </div>
+
+        <div class="bookings-grid">
+          <!-- Booking Card 1 -->
+          <div class="booking-card" id="details-btn">
+            <div class="booking-header">
+              <div class="distance-info">
+                <span class="iconify" data-icon="material-symbols:route"></span>
+                <span>8.5 km from you</span>
+              </div>
+              <p class="time">Now</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">John Smith</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">123 Main St, Downtown</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">456 Oak Ave, Uptown</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-note">
+              <p class="note-text">
+                I’m waiting at the guardhouse near the main
+                gateasknboashsanp[apgponsa amsfpo].
+              </p>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱25.00</span>
+            </div>
+            <div class="booking-action">
+              <button class="accept-btn" onclick="openModal('bookingAccepted')">Accept</button>
+            </div>
+          </div>
+
+          <!-- Booking Card 2 -->
+          <div class="booking-card " id="details-btn">
+            <div class="booking-header">
+              <div class="distance-info">
+                <span class="iconify" data-icon="material-symbols:route"></span>
+                <span>12.3 km from you</span>
+              </div>
+              <p class="time">October 12, 10:30AM</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Maria Santos</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">SM North EDSA</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Quezon City Hall</div>
+                </div>
+              </div>
+            </div>
+            <div class="booking-note">
+              <div class="note-content">
+                <div class="note-text">Please pick me up</div>
+              </div>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱32.50</span>
+            </div>
+            <div class="booking-action">
+              <button class="accept-btn" onclick="openModal('bookingAccepted')">Accept</button>
+            </div>
+          </div>
+
+          <!-- Booking Card 3 -->
+          <div class="booking-card" id="details-btn">
+            <div class="booking-header">
+              <div class="distance-info">
+                <span class="iconify" data-icon="material-symbols:route"></span>
+                <span>18.7 km from you</span>
+              </div>
+              <p class="time">March 3, 8:30PM</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Anna Cruz</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Makati CBD</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">NAIA Terminal 3</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-note">
+              <div class="note-content">
+                <div class="note-text">No note provided</div>
+              </div>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱45.00</span>
+            </div>
+            <div class="booking-action">
+              <button class="accept-btn">Accept</button>
+            </div>
+          </div>
+          <!-- Booking Card 4 -->
+          <div class="booking-card" id="details-btn">
+            <div class="booking-header">
+              <div class="distance-info">
+                <span class="iconify" data-icon="material-symbols:route"></span>
+                <span>18.7 km from you</span>
+              </div>
+              <p class="time">June 12, 11:30AM</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Anna Cruz</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Makati CBD</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">NAIA Terminal 3</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-note">
+              <div class="note-content">
+                <div class="note-text">
+                  I’m waiting at the guardhouse near the main gate.
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱45.00</span>
+            </div>
+            <div class="booking-action">
+              <button class="accept-btn">Accept</button>
+            </div>
+          </div>
+          <!-- Booking Card 5 -->
+          <div class="booking-card" id="details-btn">
+            <div class="booking-header">
+              <div class="distance-info">
+                <span class="iconify" data-icon="material-symbols:route"></span>
+                <span>18.7 km from you</span>
+              </div>
+              <p class="time">March 3, 8:30PM</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Anna Cruz</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Makati CBD</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">NAIA Terminal 3</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-note">
+              <div class="note-content">
+                <div class="note-text">
+                  I’m waiting at the guardhouse near the main gate.
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱45.00</span>
+            </div>
+            <div class="booking-action">
+              <button class="accept-btn">Accept</button>
+            </div>
+          </div>
+          <!-- Booking Card 6 -->
+          <div class="booking-card" id="details-btn">
+            <div class="booking-header">
+              <div class="distance-info">
+                <span class="iconify" data-icon="material-symbols:route"></span>
+                <span>18.7 km from you</span>
+              </div>
+              <p class="time">June 12, 11:30AM</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Anna Cruz</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Makati CBD</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">NAIA Terminal 3</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-note">
+              <div class="note-content">
+                <div class="note-text">No note provided</div>
+              </div>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱45.00</span>
+            </div>
+            <div class="booking-action">
+              <button class="accept-btn">Accept</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ONGOING BOOKINGS CONTAINER -->
+      <div class="bookings-container" id="ongoing-section">
+        <div class="bookings-header">
+          <h3>Ongoing Bookings</h3>
+          <p>Track your current active rides</p>
+        </div>
+
+        <div class="bookings-grid">
+          <!-- Ongoing Booking Card 1 -->
+          <div class="booking-card ongoing" id="details-btn">
+            <div class="booking-header">
+              <div class="status-info">
+                <span
+                  class="iconify"
+                  data-icon="material-symbols:directions-car"
+                ></span>
+                <span class="status-text">In Progress</span>
+              </div>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Michael Johnson</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">BGC Central Square</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Ortigas Center</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-note">
+              <p class="note-text">
+                I’m waiting at the guardhouse near the main
+                gateasknboashsanp[apgponsa amsfpo].
+              </p>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱85.00</span>
+            </div>
+          </div>
+
+          <!-- Ongoing Booking Card 2 -->
+          <div class="booking-card ongoing" id="details-btn">
+            <div class="booking-header">
+              <div class="status-info">
+                <span
+                  class="iconify"
+                  data-icon="material-symbols:directions-car"
+                ></span>
+                <span class="status-text">Picking Up</span>
+              </div>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Sarah Lee</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Ayala Triangle</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Manila Airport</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-note">
+              <p class="note-text">No note provided</p>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱120.00</span>
+            </div>
+          </div>
+
+          <!-- Ongoing Booking Card 3 -->
+          <div class="booking-card ongoing" id="details-btn">
+            <div class="booking-header">
+              <div class="status-info">
+                <span
+                  class="iconify"
+                  data-icon="material-symbols:directions-car"
+                ></span>
+                <span class="status-text">En Route</span>
+              </div>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">David Chen</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Mall of Asia</div>
+                </div>
+              </div>
+
+              <div class="broken-vertical-line"></div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Alabang Town Center</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-note">
+              <p class="note-text">No note provided</p>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱95.50</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORY CONTAINER -->
+      <div class="bookings-container" id="history-section">
+        <div class="bookings-header">
+          <div class="header-content">
+            <div class="header-text">
+              <h3>History</h3>
+              <p>View your completed and cancelled rides</p>
+            </div>
+            <div class="filter-section">
+              <label for="history-filter" class="filter-label"
+                >Filter by status:</label
+              >
+              <select id="history-filter" class="filter-dropdown">
+                <option value="all" selected>All</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="bookings-grid">
+          <!-- Completed Booking Card 1 -->
+          <div class="booking-card history">
+            <div class="booking-header">
+              <div class="status-info completed">
+                <span
+                  class="iconify"
+                  data-icon="material-symbols:check-circle"
+                ></span>
+                <span class="status-text">Completed</span>
+              </div>
+              <p class="time">2 hours ago</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Emma Wilson</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Bonifacio Global City</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Makati Business District</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱75.00</span>
+            </div>
+          </div>
+
+          <!-- Completed Booking Card 2 -->
+          <div class="booking-card history">
+            <div class="booking-header">
+              <div class="status-info completed">
+                <span
+                  class="iconify"
+                  data-icon="material-symbols:check-circle"
+                ></span>
+                <span class="status-text">Completed</span>
+              </div>
+              <p class="time">Yesterday, 3:45 PM</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Robert Garcia</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Eastwood City</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">UP Diliman</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱52.50</span>
+            </div>
+          </div>
+
+          <!-- Cancelled Booking Card -->
+          <div class="booking-card history">
+            <div class="booking-header">
+              <div class="status-info cancelled">
+                <span
+                  class="iconify"
+                  data-icon="material-symbols:cancel"
+                ></span>
+                <span class="status-text">Cancelled</span>
+              </div>
+              <p class="time">Yesterday, 9:20 AM</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">Lisa Martinez</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Greenhills Shopping Center</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Cubao</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱38.00</span>
+            </div>
+          </div>
+
+          <!-- Completed Booking Card 3 -->
+          <div class="booking-card history">
+            <div class="booking-header">
+              <div class="status-info completed">
+                <span
+                  class="iconify"
+                  data-icon="material-symbols:check-circle"
+                ></span>
+                <span class="status-text">Completed</span>
+              </div>
+              <p class="time">2 days ago</p>
+            </div>
+
+            <div class="client-info">
+              <span class="iconify" data-icon="iconamoon:profile-fill"></span>
+              <span class="client-name">James Rodriguez</span>
+            </div>
+
+            <div class="route-container">
+              <div class="route-point pickup">
+                <div class="route-icon pickup-icon">
+                  <span class="iconify" data-icon="ic:outline-circle"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">SM Megamall</div>
+                </div>
+              </div>
+
+              <div class="route-point dropoff">
+                <div class="route-icon dropoff-icon">
+                  <span class="iconify" data-icon="mdi:location"></span>
+                </div>
+                <div class="route-details">
+                  <div class="route-address">Pasig City Hall</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-fare">
+              <span>₱42.75</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DETAILS MODAL -->
+      <div class="modal" id="detailsModal" onload="getCurrentLocation()">
+        <div class="modal-content modal-xl">
+          <div class="modal-header">
+            <div>
+              <h3>Ongoing Booking Details</h3>
+              <p class="reference">ID: 272625528262818</p>
+            </div>
+
+            <button
+              id="close-modal"
+              class="close-modal"
+              onclick="closeModal('detailsModal')"
+            >
+              <span class="iconify" data-icon="mdi:close"></span>
+            </button>
+          </div>
+          <!-- MODAL BODY FOR ONGOING BOOKING-->
+          <div class="modal-body details-modal-body">
+            <div class="booking-details">
+              <!-- PASSENGER DETAILS -->
+              <div class="passenger-details">
+                <div class="passenger-info">
+                  <div class="passenger-text-info">
+                    <div class="avatar-large">JS</div>
+                    <div class="">
+                      <h3>John Smith</h3>
+                      <p>09*********</p>
+                    </div>
+                  </div>
+                  <div class="passenger-actions">
+                    <button class="btn-call">
+                      <span class="iconify" data-icon="mdi:phone"></span>
+                    </button>
+                    <button class="btn-message">
+                      <span class="iconify" data-icon="mdi:message-text"></span>
+                    </button>
+                  </div>
+                </div>
+                <div class="route-info">
+                  <h4>Route Information</h4>
+                  <div class="route-details">
+                    <div class="route-item">
+                      <div class="location-section">
+                        <div class="location-item">
+                          <span
+                            class="iconify pickup-icon"
+                            data-icon="ic:outline-circle"
+                          ></span>
+                          <div class="location-text">
+                            <span class="location-label">Pick-up Location</span>
+                            <span class="location-name">SM North EDSA</span>
+                          </div>
+                        </div>
+                        <div class="route-stats">
+                          <button onclick="openInGoogleMaps(this)">
+                            <span
+                              class="iconify"
+                              data-icon="tabler:location-filled"
+                            ></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="route-item">
+                      <div class="location-section">
+                        <div class="location-item">
+                          <span
+                            class="iconify dropoff-icon"
+                            data-icon="mdi:location"
+                          ></span>
+                          <div class="location-text">
+                            <span class="location-label"
+                              >Drop-off Location</span
+                            >
+                            <span class="location-name">QC Circle</span>
+                          </div>
+                        </div>
+                        <div class="route-stats">
+                          <button onclick="openInGoogleMaps(this)">
+                            <span
+                              class="iconify"
+                              data-icon="tabler:location-filled"
+                            ></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- TRIP DETAILS -->
+                <div class="trip-details">
+                  <h4>Trip Details</h4>
+                  <div class="trip-info">
+                    <div class="trip-item">
+                      <span class="trip-label">Date & Time</span>
+                      <span class="trip-value">Sept 15, 2025 • 08:30 AM</span>
+                    </div>
+                    <div class="trip-item">
+                      <span class="trip-label">Payment Method</span>
+                      <span class="trip-value">Cash</span>
+                    </div>
+                    <div class="total-fare">
+                      <h4>Total Fare</h4>
+                      <div class="fare-amount">₱126</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- TOTAL FARE -->
+
+                <!-- BOOKING COMMENTS -->
+                <div class="details-note">
+                  <h4>Note</h4>
+                  <div class="comment-section">
+                    <div class="details-note-text">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Maiores dicta vero itaque aliquid, placeat eius! Sed,
+                      aspernatur est odio incidunt soluta eveniet consequuntur
+                      nesciunt sapiente odit aliquam officia, eum voluptatibus.
+                      Sed, magni perferendis cum id perspiciatis quisquam nulla
+                      nemo facilis aperiam temporibus delectus iste? Molestiae
+                      officiis soluta et sit excepturi, accusantium accusamus
+                      harum quis vitae adipisci explicabo aut laboriosam
+                      exercitationem.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="modal-actions">
+                  <!-- Arrived at pickup(Arrived at pickup),Arrived at Destination(Arrived at dropoff) -->
+                  <button id="togglePickup" class="btn-completed">
+                    Arrived at Pickup
+                  </button>
+
+                  <!-- Hide Cancel Booking after pickup -->
+                  <button class="btn-cancel" id="cancelRide">
+                    Cancel Booking
+                  </button>
+                </div>
+              </div>
+              <!-- MAP -->
+              <div class="map-section">
+                <div id="map">
+                  <p id="pickup-location" style="display: none">
+                    Marilao Bulacan
+                  </p>
+                  <p id="dropoff-location" style="display: none">Makati City</p>
+                  <!-- <p id="current-location" style="display: none;"></p> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODAL CONFIRMATION-->
+          <!-- Arrived at Pickup Modal -->
+          <div id="arrivedPickupModal" class="modal">
+            <div class="modal-content modal-sm">
+              <!-- Header -->
+              <div class="modal-header">
+                <h3 id="headerText">Confirm Arrival</h3>
+                <button
+                  class="close-modal"
+                  onclick="closeModal('arrivedPickupModal')"
+                >
+                  &times;
+                </button>
+              </div>
+
+              <div class="modal-body">
+                <p id="confirmationText" class="confirmation-text">
+                  Are you sure you’ve arrived at the passenger’s pickup
+                  location?
+                </p>
+              </div>
+
+              <!-- Footer -->
+              <div class="modal-footer">
+                <button
+                  class="modal-btn secondary"
+                  onclick="closeModal('arrivedPickupModal')"
+                  id="cancelArrivalBtn"
+                >
+                  Cancel
+                </button>
+                <button
+                  class="modal-btn"
+                  id="confirmArrivalBtn"
+                  onclick="confirmArrival()"
+                >
+                  Yes, Arrived
+                </button>
+
+                <button
+                  class="modal-btn"
+                  id="confirmDropoffBtn"
+                  style="display: none"
+                  onclick="confirmDropoffArrival()"
+                >
+                  Yes, Arrived
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOOKING ACCEPTED -->
+      <div class="modal" id="bookingAccepted">
+        <div class="modal-content modal-sm">
+          <!-- Header -->
+          <div class="modal-header">
+            <h3 id="headerText">Ride Confirmed!</h3>
+            <button
+              class="close-modal"
+              onclick="closeModal('bookingAccepted')"
+            >
+              &times;
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <p id="confirmationText" class="confirmation-text">
+             Proceed to the passenger’s pickup point.
+            </p>
+          </div>
+
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button
+              class="modal-btn secondary"
+              onclick="confirmBookingAndShowDetails()"
+              id="cancelArrivalBtn"
+            >
+              Okay
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
+    <script type="module" src="/js/map.js"></script>
+    <script src="js/schedule.js"></script>
+  </body>
+</html>

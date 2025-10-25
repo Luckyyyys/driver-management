@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Driver Management</title>
+    <!-- IMPORT CSS -->
+    <link rel="stylesheet" href="css/admin.css" />
+    <!-- ICONIFY CDN -->
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <nav id="sidebar" class="admin-sidebar">
+      <!-- LOGO -->
+      <div class="logo-section">
+        <div class="logo-icon">
+          <img src="assets/logo.png" alt="" />
+        </div>
+        <span>Journeolink</span>
+      </div>
+
+      <!-- MENU -->
+      <div class="menu-header">
+        <span class="iconify" data-icon="material-symbols:dashboard"></span>
+        <span>Dashboard</span>
+      </div>
+      <ul class="admin-menu">
+        <li class="menu-group">
+          <div class="menu-header">
+            <span class="iconify" data-icon="bxs:car"></span>
+            <span>Drivers</span>
+          </div>
+          <ul class="submenu">
+            <li onclick="this.querySelector('a').click()"><a href="admin_account.html">Accounts</a></li>
+            <li onclick="this.querySelector('a').click()"> <a href="admin_application.html">Applications</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- BOTTOM MENU -->
+      <div class="bottom-menu">
+        <div class="menu-item">
+          <span class="iconify" data-icon="material-symbols:person"></span>
+          <span>My Profile</span>
+        </div>
+        <div class="menu-item" onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="material-symbols:logout"></span>
+          <a href="index.html">Log Out</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-main">
+      <!-- HEADER -->
+      <header class="admin-header">
+        <h1>Driver Accounts Overview</h1>
+      </header>
+
+      <!-- STATS CARDS -->
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-icon orange">
+            <span class="iconify" data-icon="mdi:car"></span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Total Number of Serviceable Drivers</span>
+            <span class="stat-value" id="serviceableCount">—</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <span class="iconify" data-icon="mdi:people"></span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label"
+              >Total Number of Drivers in Journeolink</span
+            >
+            <span class="stat-value" id="totalDriversCount">—</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon red">
+            <span
+              class="iconify"
+              data-icon="material-symbols:person-off"
+            ></span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label"
+              >Total Number of Disabled Driver Accounts</span
+            >
+            <span class="stat-value" id="disabledCount">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-header">
+        <h2>Driver Accounts List</h2>
+        <div class="table-controls">
+          <div class="sort-control">
+            <label>Sort By</label>
+            <select>
+              <option>Name</option>
+              <option>Date</option>
+              <option>Status</option>
+            </select>
+          </div>
+          <div class="status-filter">
+            <label>Status</label>
+            <select>
+              <option>All</option>
+              <option>Active</option>
+              <option>Inactive</option>
+              <option>Disabled</option>
+            </select>
+          </div>
+          <div class="search-control">
+            <span class="iconify" data-icon="material-symbols:search"></span>
+            <input type="text" placeholder="Search" />
+          </div>
+        </div>
+      </div>
+
+      <!-- DRIVER ACCOUNTS TABLE -->
+      <div class="table-container">
+        <table class="drivers-table">
+          <thead>
+            <tr>
+              <th>Driver ID</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Service Status</th>
+              <th>Account Status</th>
+              <th>Joined At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- rows will be populated dynamically from the database -->
+          </tbody>
+        </table>
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+          <button class="page-btn prev">Previous</button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn next">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRIVER DETAILS MODAL -->
+    <div id="driverModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Driver Account</h3>
+          <button class="close-btn" onclick="closeModal()">
+            <span class="iconify" data-icon="mdi:close"></span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Driver Profile Section -->
+          <div class="driver-profile">
+            <div class="profile-image">
+              <img
+                src="https://scontent.fcrk3-2.fna.fbcdn.net/v/t39.30808-1/541061886_2002119353875993_4404890327560701031_n.jpg?stp=cp6_dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeH3PI-bIsYTfPsmMPRGAD3_vYdDKM5grJi9h0MozmCsmAzHLgtSUrmzUJ23V-gzc6rHs-fuTbThWgxu4SrOJn9I&_nc_ohc=n1bDQk6tSNMQ7kNvwEL0QA8&_nc_oc=AdmkerNbAYHbOWzve0SQlZYsiMSK9UMAh946SWKV-6pqxrjTKse8y0p6rMJ7I5qDyhY&_nc_zt=24&_nc_ht=scontent.fcrk3-2.fna&_nc_gid=tpLWQxDiYE6JedV3ZzrOgQ&oh=00_AfbGx1XdQzIpyDtdaEl_7XHA6RRnS1K3BRKgT3Jt0Amd1w&oe=68E07587"
+                alt="Driver Photo"
+                id="driverPhoto"
+              />
+            </div>
+            <div class="profile-info">
+              <h4 id="driverName">Jims, Librown</h4>
+              <p id="driverId">DRV-aakjau-90</p>
+              <p id="driverEmail">janehoeland5@email.com</p>
+            </div>
+          </div>
+
+          <!-- Personal Information -->
+          <div class="info-section">
+            <h5>Personal Information</h5>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Last Name</label>
+                <input type="text" id="lastName" value="Doe" readonly />
+              </div>
+              <div class="info-item">
+                <label>First Name</label>
+                <input type="text" id="firstName" value="Jane" readonly />
+              </div>
+              <div class="info-item">
+                <label>Last Name</label>
+                <input type="text" id="lastNameAlt" value="Williams" readonly />
+              </div>
+              <div class="info-item">
+                <label>Ext</label>
+                <input type="text" id="ext" value="None" readonly />
+              </div>
+              <div class="info-item">
+                <label>Birthdate</label>
+                <input
+                  type="text"
+                  id="birthdate"
+                  value="25 Sept 1996"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Gender</label>
+                <input type="text" id="gender" value="Female" readonly />
+              </div>
+              <div class="info-item full-width">
+                <label>Address</label>
+                <input
+                  type="text"
+                  id="address"
+                  value="4975 Transit Rd, Lancaster NY 14086"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Contact Number</label>
+                <input
+                  type="text"
+                  id="contactNumber"
+                  value="(716) 345 6789"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value="janehoeland5@email.com"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Alternative Email</label>
+                <input
+                  type="email"
+                  id="altEmail"
+                  value="janehoeland7@gmail.com"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Driver Details & Documents -->
+          <div class="info-section">
+            <h5>Driver Details & Documents</h5>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Driver Identification</label>
+                <input
+                  type="text"
+                  id="driverIdent"
+                  value="DRV-aakjau-90"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Date Joined</label>
+                <input
+                  type="text"
+                  id="dateJoined"
+                  value="20 Sept 2025"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Driver's License Number</label>
+                <input
+                  type="text"
+                  id="licenseNumber"
+                  value="012-34-567890"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Driver's License Expiry Date</label>
+                <input
+                  type="text"
+                  id="licenseExpiry"
+                  value="20 Dec 2027"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <!-- Document Links -->
+            <div class="document-section">
+              <div class="document-item">
+                <label>Driver's License Photo</label>
+                <div class="document-link">
+                  <span>license-john-doe-a27km.png</span>
+                  <button class="view-btn">
+                    <span class="iconify" data-icon="mdi:eye"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="document-item">
+                <label>NBI Clearance</label>
+                <div class="document-link">
+                  <span>clearance-john-doe-mnq904.png</span>
+                  <button class="view-btn">
+                    <span class="iconify" data-icon="mdi:eye"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="document-item">
+                <label>Proof of Address</label>
+                <div class="document-link">
+                  <span>proof-of-add2-john-doe-anduaoxja54.png</span>
+                  <button class="view-btn">
+                    <span class="iconify" data-icon="mdi:eye"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="document-item">
+                <label>2×2 ID Picture</label>
+                <div class="document-link">
+                  <span>id-pic-john-doe-loqk95.png</span>
+                  <button class="view-btn">
+                    <span class="iconify" data-icon="mdi:eye"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="close-modal-btn" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script>    // Fetch aggregate stats from PHP endpoint and show in stat cards
+     async function fetchStats() {
+try {
+         const res = await fetch('/php/get_stats.php');
+          if (!res.ok) throw new Error('Failed to load stats');
+        const data = await res.json();
+         document.getElementById('serviceableCount').textContent = data.serviceable ?? '0';
+         document.getElementById('totalDriversCount').textContent = data.total ?? '0';
+      document.getElementById('disabledCount').textContent = data.disabled ?? '0';
+      } catch (err) {
+         console.error('fetchStats', err);
+       }
+      }
+
+       // Fetch drivers from PHP API and wire modal
+       async function fetchDrivers() {
+         try {
+           const res = await fetch('/php/get_drivers.php');
+           if (!res.ok) throw new Error('Failed to load drivers');
+           const drivers = await res.json();
+           const tbody = document.querySelector('.drivers-table tbody');
+           tbody.innerHTML = '';
+           drivers.forEach(d => {
+             const tr = document.createElement('tr');
+             tr.innerHTML = `
+               <td>${d.id}</td>
+               <td><div class="driver-info"><span>${d.full_name || ''}</span></div></td>
+               <td>${d.email || ''}</td>
+               <td><span class="status-badge">${d.service_status || ''}</span></td>
+               <td><span class="status-badge">${d.account_status || ''}</span></td>
+               <td>${d.joined_at ? new Date(d.joined_at).toLocaleDateString() : ''}</td>
+               <td><button class="action-btn" data-id="${d.id}"><span class="iconify" data-icon="mdi:eye"></span></button></td>
+             `;
+             tbody.appendChild(tr);
+           });
+ 
+           // wire action buttons
+           document.querySelectorAll('.action-btn').forEach(btn => {
+             btn.addEventListener('click', async () => {
+               const id = btn.dataset.id;
+               try {
+                 const r = await fetch(`/php/get_driver.php?id=${encodeURIComponent(id)}`);
+                 const driver = r.ok ? await r.json() : null;
+                 openModal({
+                   id: driver?.id || id,
+                   fullName: driver?.full_name || driver?.fullName || (btn.closest('tr').querySelector('.driver-info span')?.textContent || ''),
+                   email: driver?.email || ''
+                 });
+               } catch (e) {
+                 console.error(e);
+                 openModal({ id, fullName: btn.closest('tr').querySelector('.driver-info span')?.textContent || '' });
+               }
+             });
+           });
+         } catch (err) {
+           console.error('fetchDrivers', err);
+         }
+       }
+ 
+       // reuse existing openModal / closeModal functions in this file (unchanged)
+ 
+       document.addEventListener('DOMContentLoaded', function () {
++        fetchStats();
+         fetchDrivers();
+ 
+         // Close modal when clicking outside
+         const modalEl = document.getElementById("driverModal");
+         if (modalEl) {
+           modalEl.addEventListener("click", function (e) {
+             if (e.target === this) closeModal();
+           });
+         }
+       });
+     </script>
+  </body>
+</html>

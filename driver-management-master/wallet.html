@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Wallet</title>
+    <!-- IMPORT CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/wallet.css" />
+    <link rel="stylesheet" href="css/modal.css" />
+    <!-- ICONIFY CDN -->
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  </head>
+  <body>
+    <!-- NAVBAR (Reusable when using backend via PHP include) -->
+    <nav id="sidebar" class="sidebar">
+      <!-- LOGO -->
+      <div>
+        <img src="assets/logo.png" alt="" />
+      </div>
+      <p>MENU</p>
+      <ul>
+        <li onclick="this.querySelector('a').click()">
+          <span
+            class="iconify"
+            data-icon="material-symbols:dashboard-rounded"
+          ></span
+          ><a href="dashboard.html"> Dashboard</a>
+        </li>
+
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="uis:schedule"></span>
+          <a href="schedule.html"> Schedule</a>
+        </li>
+
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="ic:round-message"></span
+          ><a href="message.html"> Messages</a>
+        </li>
+        <li class="active" onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="solar:wallet-bold"></span
+          ><a href="wallet.html"> My Wallet</a>
+        </li>
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="iconamoon:profile-fill"></span
+          ><a href="profile.html"> Profile</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="main-content">
+      <!-- WALLET HEADER -->
+      <div class="wallet-header">
+        <h2>My Wallet</h2>
+        <div class="wallet-balance-card">
+          <div class="balance-info">
+            <p class="balance-label">Balance</p>
+            <h1 class="balance-amount">₱2,450.00</h1>
+          </div>
+          <div class="balance-actions">
+            <button id="topup-btn" class="top-up-btn" data-open="topup-modal">
+              <span class="iconify" data-icon="mdi:plus"></span>
+              Top Up
+            </button>
+            <button id="cashout-btn" class="top-up-btn" data-open="cashout-modal">
+              <span class="iconify" data-icon="tabler:cash-move"></span>
+              Cashout
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOBILE NAVIGATION BUTTONS -->
+      <div class="mobile-nav-buttons">
+        <div class="mobile-nav-btn" id="mobile-topup-btn" data-section="topup" data-open="topup-modal">
+          <div class="nav-btn-content">
+            <span
+              class="iconify nav-icon"
+              data-icon="mdi:arrow-up-circle"
+            ></span>
+            <span class="nav-text">Top Up</span>
+          </div>
+          <span class="iconify nav-arrow" data-icon="mdi:chevron-right"></span>
+        </div>
+        <div
+          class="mobile-nav-btn"
+          id="mobile-cashout-btn"
+          data-section="cashout"
+          data-open="cashout-modal"
+        >
+          <div class="nav-btn-content">
+            <span
+              class="iconify nav-icon"
+              data-icon="mdi:arrow-down-circle"
+            ></span>
+            <span class="nav-text">Cash out</span>
+          </div>
+          <span class="iconify nav-arrow" data-icon="mdi:chevron-right"></span>
+        </div>
+
+        <div class="mobile-nav-btn" data-section="transactions">
+          <div class="nav-btn-content">
+            <span
+              class="iconify nav-icon"
+              data-icon="mdi:wallet-outline"
+            ></span>
+            <span class="nav-text">Transactions</span>
+          </div>
+          <span class="iconify nav-arrow" data-icon="mdi:chevron-right"></span>
+        </div>
+
+        <div class="mobile-nav-btn" data-section="payment-methods">
+          <div class="nav-btn-content">
+            <span
+              class="iconify nav-icon"
+              data-icon="mdi:credit-card-outline"
+            ></span>
+            <span class="nav-text">Payment Methods</span>
+          </div>
+          <span class="iconify nav-arrow" data-icon="mdi:chevron-right"></span>
+        </div>
+
+        <div class="mobile-nav-btn" data-section="account">
+          <div class="nav-btn-content">
+            <span
+              class="iconify nav-icon"
+              data-icon="mdi:account-outline"
+            ></span>
+            <span class="nav-text">Account details</span>
+          </div>
+          <span class="iconify nav-arrow" data-icon="mdi:chevron-right"></span>
+        </div>
+      </div>
+
+      <!-- WALLET CONTENT GRID -->
+      <div class="wallet-grid">
+        <!-- RECENT TRANSACTIONS -->
+        <div
+          class="wallet-section"
+          id="transactions-section"
+          data-mobile-section="transactions"
+        >
+          <div class="section-header">
+            <div class="section-header-content">
+              <button class="back-btn" style="display: none">
+                <span class="iconify" data-icon="mdi:arrow-left"></span>
+              </button>
+              <div class="section-title-group">
+                <h3>Transactions</h3>
+                <p class="section-subtitle">Last 7 days</p>
+              </div>
+            </div>
+          </div>
+          <div class="transactions-list">
+            <div class="transaction-item">
+              <div class="transaction-icon danger">
+                <span class="iconify" data-icon="mdi:arrow-down"></span>
+              </div>
+              <div class="transaction-details">
+                <p class="transaction-type">Cash-out to GCash</p>
+                <p class="transaction-date">Sept 28, 2025 - 14:35</p>
+              </div>
+              <div class="transaction-amount danger">- ₱500.00</div>
+            </div>
+
+            <div class="transaction-item">
+              <div class="transaction-icon success">
+                <span class="iconify" data-icon="mdi:arrow-up"></span>
+              </div>
+              <div class="transaction-details">
+                <p class="transaction-type">Trip Payment</p>
+              </div>
+              <div class="transaction-amount success">+ ₱450.00</div>
+            </div>
+
+            <div class="transaction-item">
+              <div class="transaction-icon warning">
+                <span class="iconify" data-icon="mdi:arrow-up"></span>
+              </div>
+              <div class="transaction-details">
+                <p class="transaction-type">Top-up</p>
+              </div>
+              <div class="transaction-amount success">+ ₱1050.00</div>
+            </div>
+
+            <div class="transaction-item">
+              <div class="transaction-icon success">
+                <span class="iconify" data-icon="mdi:arrow-up"></span>
+              </div>
+              <div class="transaction-details">
+                <p class="transaction-type">Trip Payment</p>
+              </div>
+              <div class="transaction-amount success">+ ₱150.00</div>
+            </div>
+
+            <div class="transaction-item">
+              <div class="transaction-icon success">
+                <span class="iconify" data-icon="mdi:arrow-up"></span>
+              </div>
+              <div class="transaction-details">
+                <p class="transaction-type">Trip Payment</p>
+              </div>
+              <div class="transaction-amount success">+ ₱100.00</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAYMENT METHODS -->
+        <div
+          class="wallet-section"
+          id="payment-methods-section"
+          data-mobile-section="payment-methods"
+        >
+          <div class="section-header">
+            <div class="section-header-content">
+              <button class="back-btn" style="display: none">
+                <span class="iconify" data-icon="mdi:arrow-left"></span>
+              </button>
+              <div class="section-title-group">
+                <h3>Payment Methods</h3>
+                <p class="section-subtitle">Manage your cards and account</p>
+              </div>
+            </div>
+          </div>
+          <div class="payment-methods-list">
+            <div class="payment-method-item">
+              <div class="payment-icon gcash">
+                <span class="iconify" data-icon="arcticons:gcash"></span>
+              </div>
+              <div class="payment-details">
+                <p class="payment-name">GCash</p>
+                <p class="payment-number">09*********</p>
+              </div>
+              <button>Remove</button>
+            </div>
+
+            <div class="payment-method-item">
+              <div class="payment-icon maya">
+                <span class="iconify" data-icon="arcticons:maya"></span>
+              </div>
+              <div class="payment-details">
+                <p class="payment-name">Maya</p>
+                <p class="payment-number">09*********</p>
+              </div>
+              <button>Remove</button>
+            </div>
+
+            <div class="add-payment-method">
+              <span class="iconify" data-icon="mdi:plus"></span>
+              <span>Add Payment Method</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCOUNT DETAILS -->
+      <div
+        class="wallet-section account-details"
+        id="account-section"
+        data-mobile-section="account"
+      >
+        <div class="section-header">
+          <div class="section-header-content">
+            <button class="back-btn" style="display: none">
+              <span class="iconify" data-icon="mdi:arrow-left"></span>
+            </button>
+            <div class="section-title-group">
+              <h3>Account details</h3>
+              <p class="section-subtitle">
+                Your wallet and banking information
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="account-info-grid">
+          <div class="info-row">
+            <span class="info-label">Account Name</span>
+            <span class="info-value">Lebron Raymund James Sr.</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Phone Number</span>
+            <span class="info-value">09123456789</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email Address</span>
+            <span class="info-value">lebronjames@gmail.com</span>
+            <span class="info-label">Account Status</span>
+            <span class="info-value status active">Active</span>
+          </div>
+          <div class="edit-account-link">
+            <a href="#" class="edit-link">Edit Account Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top-up Modal -->
+    <div id="topup-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Top Up</h3>
+          <button
+            id="close-topup-modal"
+            class="close-modal"
+            data-close="topup-modal"
+          >
+            <span class="iconify" data-icon="mdi:close"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="topup-form">
+            <div class="form-group">
+              <label>Amount</label>
+              <div class="quick-amount-buttons">
+                <button class="quick-amount-btn">₱100</button>
+                <button class="quick-amount-btn">₱250</button>
+                <button class="quick-amount-btn">₱500</button>
+                <button class="quick-amount-btn">₱700</button>
+                <button class="quick-amount-btn">₱1000</button>
+                <button class="quick-amount-btn">₱2000</button>
+              </div>
+              <div class="amount-input">
+                <span
+                  class="iconify peso-icon"
+                  data-icon="pepicons-pop:peso"
+                ></span>
+                <input
+                  type="text"
+                  placeholder="0.00"
+                  class="form-control amount-field"
+                />
+              </div>
+              <div class="input-note">
+                Please enter a top-up amount between ₱100 and ₱2,000.
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Select Payment Method</label>
+              <div class="payment-methods-group">
+                <div class="payment-method-option">
+                  <input
+                    type="radio"
+                    id="topup-gcash"
+                    name="topup-payment"
+                    value="gcash"
+                    checked
+                  />
+
+                  <label for="topup-gcash">
+                    <div class="payment-method-icon gcash">
+                      <span class="iconify" data-icon="arcticons:gcash"></span>
+                    </div>
+                    <div class="payment-method-details">
+                      <p class="payment-method-name">GCash</p>
+                      <p class="payment-method-number">09*********</p>
+                    </div>
+                    <div class="radio-checkmark"></div>
+                  </label>
+                </div>
+
+                <div class="payment-method-option">
+                  <input
+                    type="radio"
+                    id="topup-maya"
+                    name="topup-payment"
+                    value="maya"
+                  />
+                  <label for="topup-maya">
+                    <div class="payment-method-icon maya">
+                      <span class="iconify" data-icon="arcticons:maya"></span>
+                    </div>
+                    <div class="payment-method-details">
+                      <p class="payment-method-name">Maya</p>
+                      <p class="payment-method-number">09*********</p>
+                    </div>
+                    <div class="radio-checkmark"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn secondary" data-modal="topup-modal">
+            Cancel
+          </button>
+          <button class="modal-btn">Add Funds</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cash-out Modal -->
+    <div id="cashout-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Cash Out</h3>
+          <button
+            id="close-modal"
+            class="close-modal"
+            data-close="cashout-modal"
+          >
+            <span class="iconify" data-icon="mdi:close"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="cashout-form">
+            <div class="form-group">
+              <label>Amount</label>
+              <div class="amount-input">
+                <span
+                  class="iconify peso-icon"
+                  data-icon="pepicons-pop:peso"
+                ></span>
+                <input
+                  type="text"
+                  placeholder="0.00"
+                  class="form-control amount-field"
+                />
+              </div>
+              <div class="input-note">
+                Please enter a cash-out amount of at least ₱50.
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Select Payment Method</label>
+              <div class="payment-methods-group">
+                <div class="payment-method-option">
+                  <input
+                    type="radio"
+                    id="cashout-gcash"
+                    name="cashout-payment"
+                    value="gcash"
+                    checked
+                  />
+                  <label for="cashout-gcash">
+                    <div class="payment-method-icon gcash">
+                      <span class="iconify" data-icon="arcticons:gcash"></span>
+                    </div>
+                    <div class="payment-method-details">
+                      <p class="payment-method-name">GCash</p>
+                      <p class="payment-method-number">09*********</p>
+                    </div>
+                    <div class="radio-checkmark"></div>
+                  </label>
+                </div>
+
+                <div class="payment-method-option">
+                  <input
+                    type="radio"
+                    id="cashout-maya"
+                    name="cashout-payment"
+                    value="maya"
+                  />
+                  <label for="cashout-maya">
+                    <div class="payment-method-icon maya">
+                      <span class="iconify" data-icon="arcticons:maya"></span>
+                    </div>
+                    <div class="payment-method-details">
+                      <p class="payment-method-name">Maya</p>
+                      <p class="payment-method-number">09*********</p>
+                    </div>
+                    <div class="radio-checkmark"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn secondary" data-modal="cashout-modal">
+            Cancel
+          </button>
+          <button class="modal-btn">Withdraw Funds</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
+    <script src="js/wallet.js"></script>
+  </body>
+</html>

@@ -1,0 +1,383 @@
+.messages-container {
+  display: flex;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  height: calc(100vh - 30px);
+  overflow: hidden;
+}
+
+.messages-sidebar {
+  width: 300px;
+  border-right: 1px solid #eee;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-header {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+}
+
+.messages-header h2 {
+  font-size: 1.5rem;
+  padding: 20px 20px 15px;
+  color: #333;
+  margin: 0;
+}
+
+.messages-categories {
+  overflow-y: auto;
+  height: calc(100vh - 185px);
+  padding: 0 10px 20px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 0 10px 15px;
+}
+
+.search-box input {
+  border: none;
+  background: none;
+  padding: 5px;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.search-box .iconify {
+  color: #666;
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+.category-title {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 5px 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.message-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border-radius: 8px;
+  margin-bottom: 2px;
+}
+
+.message-item.unread {
+  font-weight: 700;
+}
+
+.message-item:hover {
+  background: #f5f5f5;
+}
+
+.avatar {
+  min-width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  margin-right: 12px;
+  font-size: 0.9rem;
+}
+
+.message-info {
+  flex: 1;
+  padding-right: 8px;
+  min-width: 0;
+}
+
+.message-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.message-top h4 {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.message-preview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #666;
+  font-size: 0.85rem;
+  max-width: 100%;
+}
+
+.time {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.message-preview {
+  font-size: 0.85rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Chat Area Styles */
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+  height: 100%;
+  position: relative;
+}
+
+.chat-header {
+  padding: 15px 25px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.chat-user {
+  display: flex;
+  align-items: center;
+}
+
+.back-to-messages {
+  display: none;
+  margin-right: 25px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.user-info {
+  margin-left: 12px;
+}
+
+.user-info h3 {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.user-info p {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.more-options {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 1.5rem;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: calc(100vh - 200px);
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 12px 15px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.message-bubble p {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.message-bubble .message-time {
+  font-size: 0.75rem;
+  color: #666;
+  display: block;
+  text-align: right;
+}
+
+.received {
+  background: var(--primary-color);
+  align-self: flex-start;
+  color: #fff;
+  border-bottom-left-radius: 4px;
+}
+
+.sent {
+  background: #e4e4e4;
+  color: #000;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.sent .message-time {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.received .message-time {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.chat-input {
+  padding: 20px;
+  background: #fff;
+  border-top: 1px solid #eee;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.chat-input form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.chat-input input {
+  flex: 1;
+  border: none;
+  padding: 12px 15px;
+  font-size: 0.9rem;
+  color: #333;
+  background: #f5f5f5;
+  border-radius: 20px;
+  transition: background 0.3s ease;
+}
+
+.chat-input input:focus {
+  outline: none;
+  background: #f0f0f0;
+}
+
+.chat-input button {
+  border: none;
+  cursor: pointer;
+  min-width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+#messageForm .iconify {
+  color: #3f562c;
+  font-size: 1.9rem;
+  cursor: pointer;
+}
+
+.chat-input .attach-btn:hover {
+  color: var(--secondary-color);
+}
+
+.chat-input .send-btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+.chat-input .send-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+@media (max-width: 768px) {
+  .messages-container {
+    margin: -10px;
+    height: calc(100vh - 80px);
+  }
+  .main-content{
+    margin-bottom: 0;
+  }
+
+  .chat-input {
+    padding: 10px;
+  }
+
+  #messageForm .iconify {
+    color: #3f562c;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .messages-sidebar {
+    width: 100%;
+    display: block;
+  }
+
+  .chat-area {
+    width: 100%;
+    display: none;
+  }
+
+  .chat-area.show {
+    display: flex;
+  }
+
+  .messages-sidebar.hide {
+    display: none;
+  }
+
+  .message-bubble {
+    max-width: 85%;
+  }
+
+  .back-to-messages {
+    display: block;
+  }
+
+  .chat-messages {
+    padding: 10px 5px;
+  }
+}
+
+/* Add role-based styling */
+.message-item.driver-contact .avatar {
+    background-color: #2E5B1D;
+}
+
+.message-item.user-contact .avatar {
+    background-color: #1a73e8;
+}
+
+.message-item.driver-contact .avatar .iconify {
+    font-size: 1.2em;
+    color: white;
+}
+
+.message-item.user-contact .avatar .iconify {
+    font-size: 1.2em;
+    color: white;
+}

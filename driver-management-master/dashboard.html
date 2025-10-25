@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <!-- IMPORT CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <!-- ICONIFY CDN -->
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  </head>
+  <body>
+    <!-- NAVBAR (Reusable when using backend via PHP include) -->
+    <nav id="sidebar" class="sidebar">
+      <!-- LOGO -->
+      <div>
+        <img src="assets/logo.png" alt="" />
+      </div>
+      <p>MENU</p>
+      <ul>
+        <li class="active" onclick="this.querySelector('a').click()">
+          <span
+            class="iconify"
+            data-icon="material-symbols:dashboard-rounded"
+          ></span
+          ><a href="dashboard.html"> Dashboard</a>
+        </li>
+
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="uis:schedule"></span>
+          <a href="schedule.html"> Schedule</a>
+        </li>
+
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="ic:round-message"></span
+          ><a href="message.html"> Messages</a>
+        </li>
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="solar:wallet-bold"></span
+          ><a href="wallet.html"> My Wallet</a>
+        </li>
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="iconamoon:profile-fill"></span
+          ><a href="profile.html"> Profile</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <!-- DASHBOARD HEADER -->
+      <div class="dashboard-header">
+        <div class="dashboard-text-header">
+          <h2>Dashboard</h2>
+          <p>
+            Welcome back, <strong>Driver!</strong> Ready for your next journey?
+          </p>
+        </div>
+        <button id="statusBtn" class="btn-primary">
+          <span class="circle-online"></span>
+          <span class="status-text">Offline</span>
+        </button>
+      </div>
+
+      <!-- STATISTICS OVERVIEW -->
+      <div class="stats-overview">
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <span class="iconify" data-icon="ph:money-fill"></span>
+            </div>
+            <div class="stat-info">
+              <h3>Total Earnings</h3>
+              <p id="totalEarnings">₱0.00</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <span class="iconify" data-icon="solar:money-bag-bold"></span>
+            </div>
+            <div class="stat-info">
+              <h3>Today's Earnings</h3>
+              <p id="todayEarnings">₱0.00</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <span class="iconify" data-icon="clarity:car-solid"></span>
+            </div>
+            <div class="stat-info">
+              <h3>Total Trips</h3>
+              <p id="totalTrips">0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DASHBOARD MAIN CONTENT -->
+      <div class="dashboard-content">
+        <!-- Income Statistics Section -->
+        <div class="income-section">
+          <h3>Income Statistics</h3>
+          <div class="chart-container">
+            <canvas id="incomeChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Booking History Section -->
+        <div class="booking-history">
+          <h3>Booking History</h3>
+          <table class="booking-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>PASSENGER</th>
+                <th>ROUTE</th>
+                <th>DATE</th>
+                <th>FARE</th>
+                <th>STATUS</th>
+              </tr>
+            </thead>
+            <tbody id="bookingList">
+              <!-- Dynamic content -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    <!-- IMPORT SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      async function fetchDashboardStats() {
+        try {
+          const res = await fetch('/php/get_dashboard_stats.php');
+          if (!res.ok) throw new Error('Failed to load stats');
+          const data = await res.json();
+
+          // Update stats
+          document.getElementById('totalEarnings').textContent = `₱${parseFloat(data.total_earnings).toFixed(2)}`;
+          document.getElementById('todayEarnings').textContent = `₱${parseFloat(data.today_earnings).toFixed(2)}`;
+          document.getElementById('totalTrips').textContent = data.total_trips;
+
+          // Update booking history
+          const bookingList = document.getElementById('bookingList');
+          bookingList.innerHTML = data.recent_bookings.map(booking => `
+            <tr>
+              <td>${String(booking.id).padStart(2, '0')}</td>
+              <td>${booking.customer_name || 'Customer'}</td>
+              <td>${booking.pickup_location} to ${booking.dropoff_location}</td>
+              <td>${new Date(booking.created_at).toLocaleDateString()}</td>
+              <td>₱${parseFloat(booking.amount).toFixed(2)}</td>
+              <td>
+                <span class="status-badge ${booking.status.toLowerCase()}">
+                  ${booking.status.toUpperCase()}
+                </span>
+              </td>
+            </tr>
+          `).join('');
+
+          // Update chart
+          const ctx = document.getElementById('incomeChart').getContext('2d');
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: data.monthly_earnings.map(m => m.month),
+              datasets: [{
+                label: 'Monthly Earnings',
+                data: data.monthly_earnings.map(m => m.total),
+                borderColor: '#4CAF50',
+                tension: 0.1
+              }]
+            },
+            options: {
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    callback: value => '₱' + value
+                  }
+                }
+              }
+            }
+          });
+
+        } catch (err) {
+          console.error('Dashboard stats error:', err);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', fetchDashboardStats);
+    </script>
+    <style>
+.booking-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.booking-table th,
+.booking-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.booking-table th:nth-child(1),
+.booking-table td:nth-child(1) {
+  width: 5%;
+}
+
+.booking-table th:nth-child(2),
+.booking-table td:nth-child(2) {
+  width: 15%;
+}
+
+.booking-table th:nth-child(3),
+.booking-table td:nth-child(3) {
+  width: 30%;
+  white-space: normal;
+}
+
+.booking-table th:nth-child(4),
+.booking-table td:nth-child(4) {
+  width: 15%;
+}
+
+.booking-table th:nth-child(5),
+.booking-table td:nth-child(5) {
+  width: 15%;
+}
+
+.booking-table th:nth-child(6),
+.booking-table td:nth-child(6) {
+  width: 20%;
+}
+</style>
+  </body>
+</html>

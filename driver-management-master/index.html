@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Journeolink</title>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  </head>
+  <body>
+    <!-- Mobile Admin Warning Screen -->
+    <div id="mobileWarning" class="mobile-warning" style="display: none;">
+      <div class="warning-container">
+        <div class="warning-icon">
+          <span class="iconify" data-icon="mdi:laptop"></span>
+        </div>
+        <h2>Desktop Required</h2>
+        <p>Admin access is not available on mobile devices. Please use a desktop to access the admin account.</p>
+        <button class="back-to-login-btn" onclick="goBackToLogin()">
+          <span class="iconify" data-icon="mdi:arrow-left"></span>
+          Go Back to Login
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Login Container -->
+    <div class="login-container" id="loginContainer">
+      <div class="login-form-container">
+        <div class="login-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in to your account to continue</p>
+        </div>
+
+        <form class="login-form" id="loginForm">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-container">
+              <span class="iconify input-icon" data-icon="mdi:email"></span>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="Enter your email"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-container">
+              <span class="iconify input-icon" data-icon="mdi:lock"></span>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                placeholder="Enter your password"
+                required
+              >
+              <button type="button" class="password-toggle" onclick="togglePassword()">
+                <span class="iconify" data-icon="mdi:eye" id="passwordToggleIcon"></span>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="login-btn">
+            <span class="iconify" data-icon="mdi:login"></span>
+            Sign In
+          </button>
+        </form>
+
+        <!-- Demo Accounts -->
+        <div class="demo-accounts">
+          <h4>Demo Accounts</h4>
+          <div class="accounts-row">
+            <div class="account-item">
+              <div class="account-info">
+                <strong>Admin</strong>
+                <span>admin@journeolink.com</span>
+                <span>admin123</span>
+              </div>
+              <button class="use-account-btn" onclick="useAccount('admin@journeolink.com', 'admin123')">
+                Use Account
+              </button>
+            </div>
+            <div class="account-item">
+              <div class="account-info">
+                <strong>Driver</strong>
+                <span>driver@journeolink.com</span>
+                <span>driver123</span>
+              </div>
+              <button class="use-account-btn" onclick="useAccount('driver@journeolink.com', 'driver123')">
+                Use Account
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Static user accounts
+      const staticAccounts = {
+        'admin@journeolink.com': {
+          password: 'admin123',
+          role: 'admin',
+          redirect: 'admin_account.html'
+        },
+        'driver@journeolink.com': {
+          password: 'driver123',
+          role: 'driver',
+          redirect: 'dashboard.html'
+        }
+      };
+
+      // Mobile detection function
+      function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+               window.innerWidth <= 768;
+      }
+
+      // Password toggle functionality
+      function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('passwordToggleIcon');
+        
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          toggleIcon.setAttribute('data-icon', 'mdi:eye-off');
+        } else {
+          passwordInput.type = 'password';
+          toggleIcon.setAttribute('data-icon', 'mdi:eye');
+        }
+      }
+
+      // Use demo account function
+      function useAccount(email, password) {
+        // Check if admin is trying to login on mobile before filling credentials
+        if (email === 'admin@journeolink.com' && isMobileDevice()) {
+          showMobileWarning();
+          return;
+        }
+        
+        document.getElementById('email').value = email;
+        document.getElementById('password').value = password;
+        
+        // Add visual feedback
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        
+        emailInput.style.background = '#e8f5e8';
+        passwordInput.style.background = '#e8f5e8';
+        
+        setTimeout(() => {
+          emailInput.style.background = '';
+          passwordInput.style.background = '';
+        }, 1000);
+      }
+
+      // Show mobile warning screen
+      function showMobileWarning() {
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('mobileWarning').style.display = 'flex';
+      }
+
+      // Go back to login screen
+      function goBackToLogin() {
+        document.getElementById('mobileWarning').style.display = 'none';
+        document.getElementById('loginContainer').style.display = 'flex';
+        
+        // Clear any filled credentials
+        document.getElementById('email').value = '';
+        document.getElementById('password').value = '';
+      }
+
+      // Login form submission
+      document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const loginBtn = document.querySelector('.login-btn');
+        
+        // Basic validation
+        if (!email || !password) {
+          showError('Please fill in all fields');
+          return;
+        }
+
+        // Check static accounts
+        if (staticAccounts[email]) {
+          if (staticAccounts[email].password === password) {
+            // Check if admin is trying to login on mobile
+            if (staticAccounts[email].role === 'admin' && isMobileDevice()) {
+              showMobileWarning();
+              return;
+            }
+            
+            // Successful login
+            loginBtn.innerHTML = '<span class="iconify" data-icon="mdi:loading"></span> Signing In...';
+            loginBtn.disabled = true;
+            
+            // Show success message
+            showSuccess('Login successful! Redirecting...');
+            
+            // Simulate API call delay and redirect
+            setTimeout(() => {
+              window.location.href = staticAccounts[email].redirect;
+            }, 1500);
+          } else {
+            showError('User not found');
+          }
+        } else {
+          showError('User not found');
+        }
+      });
+
+      // Show error message
+      function showError(message) {
+        removeMessages();
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'message error-message';
+        errorDiv.innerHTML = `<span class="iconify" data-icon="mdi:alert-circle"></span> ${message}`;
+        
+        const form = document.querySelector('.login-form');
+        form.insertBefore(errorDiv, form.firstChild);
+        
+        setTimeout(() => {
+          if (errorDiv.parentNode) {
+            errorDiv.remove();
+          }
+        }, 5000);
+      }
+
+      // Show success message
+      function showSuccess(message) {
+        removeMessages();
+        const successDiv = document.createElement('div');
+        successDiv.className = 'message success-message';
+        successDiv.innerHTML = `<span class="iconify" data-icon="mdi:check-circle"></span> ${message}`;
+        
+        const form = document.querySelector('.login-form');
+        form.insertBefore(successDiv, form.firstChild);
+      }
+
+      // Remove existing messages
+      function removeMessages() {
+        const messages = document.querySelectorAll('.message');
+        messages.forEach(msg => msg.remove());
+      }
+
+      // Add loading animation to icons
+      window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+      });
+    </script>
+  </body>
+</html>

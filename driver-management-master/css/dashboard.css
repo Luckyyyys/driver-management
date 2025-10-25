@@ -1,0 +1,389 @@
+
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-text-header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.dashboard-text-header p {
+  font-size: .9rem;
+  color: #555;
+}
+
+.btn-primary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffdddd;
+  color: #e63946;
+  border: 1px solid #e63946;
+  border-radius: 25px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-width: 110px;
+  justify-content: center;
+}
+
+.btn-primary.online {
+  background-color: #a3ffb8;
+  color: #3f562c;
+  border-color: #3f562c;
+  flex-direction: row-reverse;
+}
+
+.circle-online {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #e63946;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.status-text {
+  transition: all 0.3s ease;
+}
+
+.btn-primary.online .circle-online {
+  background-color: #3f562c;
+}
+
+.stats-overview {
+  margin-bottom: 30px;
+}
+
+.stats-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px;
+  width: 100%;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  flex: 1 0 auto;
+  min-width: 200px;
+}
+
+.stat-icon {
+  font-size: 2.2rem;
+  margin-right: 15px;
+  border-radius: 20px;
+  padding: 0;
+  color: #fff;
+}
+
+.ongoing-icon {
+  color: #00751b;
+}
+.completed-icon {
+  color: #00307e;
+}
+.cancelled-icon {
+  color: #7a0000;
+}
+
+.stat-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.stat-content p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.income-section {
+  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.income-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.income-header a {
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.income-header h3 {
+  font-size: 1.5rem;
+}
+
+.income-cards {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 5px;
+}
+
+.income-card {
+  flex: 1 0 auto;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  min-width: 150px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.income-card h4 {
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+.income-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.income-change {
+  display: inline-block;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.income-change.positive {
+  color: #13d13f;
+}
+
+.income-change.negative {
+  color: #e63946;
+}
+
+.income-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 30%;
+}
+.legend-color.online {
+  background: var(--primary-color);
+}
+.legend-color.cash {
+  background: var(--secondary-color);
+}
+.legend-color.total {
+  background: #0db835;
+}
+
+.legend-amount {
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.booking-history {
+  width: 100%;
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.booking-header a {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.table-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.booking-table {
+  width: 100%;
+  min-width: 400px;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  table-layout: fixed;
+}
+
+/* Column widths */
+.booking-table th:nth-child(1),
+.booking-table td:nth-child(1) {
+  width: 35px;
+}
+
+.booking-table th:nth-child(2),
+.booking-table td:nth-child(2) {
+  width: 10px;
+}
+
+.booking-table th:nth-child(3),
+.booking-table td:nth-child(3) {
+  width: 30px;
+}
+
+
+
+.booking-table th,
+.booking-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.8rem;
+}
+
+.booking-table th {
+  background-color: #acaaaa;
+  color: var(--text-color);
+  text-transform: uppercase;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.status.completed {
+  background-color: #1eff53;
+}
+
+.status.cancelled {
+  background-color: #e63946;
+}
+@media (max-width: 768px) {
+  .main-content {
+    padding: 10px;
+  }
+  .dashboard-header {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .dashboard-text-header h2 {
+    font-size: 1.5rem;
+  }
+  .dashboard-text-header p {
+    font-size: 0.7rem;
+    max-width: 200px;
+  }
+  .btn-primary {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+  .income-header h3 {
+    font-size: 1rem;
+  }
+  .income-cards {
+    padding: auto 0;
+  }
+
+  .income-card{
+    padding: 10px;
+  }
+
+  .income-card p{
+    font-size: 0.85rem;
+  }
+
+  .income-section {
+    padding: 0;
+    background-color: transparent;
+  }
+
+  .booking-header h3{
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-table th,
+  .booking-table td {
+    padding: 8px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .booking-table th:nth-child(5),
+  .booking-table td:nth-child(5) {
+    width: 60px;
+  }
+
+  .booking-table th:nth-child(6),
+  .booking-table td:nth-child(6) {
+    width: 80px;
+  }
+
+  .status {
+    font-size: 0.7rem;
+    padding: 4px 6px;
+    display: inline-block;
+    width: auto;
+    min-width: 70px;
+    text-align: center;
+  }
+
+  .legend-item {
+    font-size: 0.85rem;
+  }
+
+  .legend-color{
+    width: 15px;
+    height: 15px;
+  }
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Message</title>
+    <!-- IMPORT CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/message.css" />
+    <!-- ICONIFY CDN -->
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  </head>
+  <body>
+    <!-- NAVBAR (Reusable when using backend via PHP include) -->
+    <nav id="sidebar" class="sidebar">
+      <!-- LOGO -->
+      <div>
+        <img src="assets/logo.png" alt="" />
+      </div>
+      <p>MENU</p>
+      <ul>
+        <li  onclick="this.querySelector('a').click()">
+          <span
+            class="iconify"
+            data-icon="material-symbols:dashboard-rounded"
+          ></span
+          ><a href="dashboard.html"> Dashboard</a>
+        </li>
+
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="uis:schedule"></span>
+          <a href="schedule.html"> Schedule</a>
+        </li>
+
+        <li class="active" onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="ic:round-message"></span
+          ><a href="message.html"> Messages</a>
+        </li>
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="solar:wallet-bold"></span
+          ><a href="wallet.html"> My Wallet</a>
+        </li>
+        <li onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="iconamoon:profile-fill"></span
+          ><a href="profile.html"> Profile</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="main-content">
+      
+      <div class="messages-container">
+        <!-- Left sidebar - Message list -->
+        <div class="messages-sidebar">
+          <div class="messages-header">
+            <h2>Messages</h2>
+            <div class="search-box">
+              <span class="iconify" data-icon="material-symbols:search"></span>
+              <input type="text" placeholder="Search">
+            </div>
+            <div class="messages-categories">
+              <p class="category-title">All messages</p>
+
+              <div class="message-item">
+                <div class="avatar">LJ</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Lebron James</h4>
+                    <span class="time">05:21</span>
+                  </div>
+                  <p class="message-preview">Dito na kami sa place pre, ikaw na lang</p>
+                </div>
+              </div>
+
+              <div class="message-item unread">
+                <div class="avatar">TD</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Tom Davis</h4>
+                    <span class="time">16:33</span>
+                  </div>
+                  <p class="message-preview">Pre shot daw sabi ni Juan?</p>
+                </div>
+              </div>
+
+              <div class="message-item">
+                <div class="avatar">KI</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Kyrie Irving</h4>
+                    <span class="time">14:20</span>
+                  </div>
+                  <p class="message-preview">Available ka ba bukas? May game tayo</p>
+                </div>
+              </div>
+
+              <div class="message-item">
+                <div class="avatar">SC</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Stephen Curry</h4>
+                    <span class="time">13:15</span>
+                  </div>
+                  <p class="message-preview">Practice tayo mamaya sa court</p>
+                </div>
+              </div>
+
+              <div class="message-item">
+                <div class="avatar">KD</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Kevin Durant</h4>
+                    <span class="time">12:45</span>
+                  </div>
+                  <p class="message-preview">Dala ako ng bagong bola</p>
+                </div>
+              </div>
+
+              <div class="message-item">
+                <div class="avatar">JM</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Ja Morant</h4>
+                    <span class="time">11:30</span>
+                  </div>
+                  <p class="message-preview">Coach, kelan next training natin?</p>
+                </div>
+              </div>
+
+              <div class="message-item">
+                <div class="avatar">LD</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Luka Doncic</h4>
+                    <span class="time">10:20</span>
+                  </div>
+                  <p class="message-preview">Pre pahiram muna ng jersey</p>
+                </div>
+              </div>
+
+              <div class="message-item">
+                <div class="avatar">GT</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Giannis</h4>
+                    <span class="time">09:15</span>
+                  </div>
+                  <p class="message-preview">May extra shoes ka pre?</p>
+                </div>
+              </div>
+
+              <div class="message-item">
+                <div class="avatar">KB</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Kobe Bryant</h4>
+                    <span class="time">Yesterday</span>
+                  </div>
+                  <p class="message-preview">Mamba mentality pre!</p>
+                </div>
+              </div>
+
+              <div class="message-item">
+                <div class="avatar">MJ</div>
+                <div class="message-info">
+                  <div class="message-top">
+                    <h4>Michael Jordan</h4>
+                    <span class="time">Yesterday</span>
+                  </div>
+                  <p class="message-preview">Good game kanina!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right side - Chat area -->
+        <div class="chat-area">
+          <div class="chat-header">
+            <div class="chat-user">
+              <div class="back-to-messages">
+                <span class="iconify" data-icon="mdi:arrow-left"></span>
+              </div>
+              <div class="avatar"></div>
+              <div class="user-info">
+                <h3>Select a conversation</h3>
+              </div>
+            </div>
+            <button class="more-options">
+              <span class="iconify" data-icon="mdi:dots-vertical"></span>
+            </button>
+          </div>
+
+          <div class="chat-messages">
+            <!-- Messages will be populated dynamically via JavaScript -->
+          </div>
+
+          <div class="chat-input">
+            <form id="messageForm" onsubmit="return false;">
+              <input type="text" name="message" placeholder="Enter your message" disabled>
+              <span class="iconify" data-icon="material-symbols:send"></span>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    <script type="module" src="js/script.js"></script>
+    <script src="js/messages.js"></script>
+  </body>
+</html>

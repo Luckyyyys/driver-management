@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Driver Management</title>
+    <!-- IMPORT CSS -->
+    <link rel="stylesheet" href="css/admin.css" />
+    <!-- ICONIFY CDN -->
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <nav id="sidebar" class="admin-sidebar">
+      <!-- LOGO -->
+      <div class="logo-section">
+        <div class="logo-icon">
+          <img src="assets/logo.png" alt="" />
+        </div>
+        <span>Journeolink</span>
+      </div>
+
+      <!-- MENU -->
+      <div class="menu-header">
+        <span class="iconify" data-icon="material-symbols:dashboard"></span>
+        <span>Dashboard</span>
+      </div>
+      <ul class="admin-menu">
+        <li class="menu-group">
+          <div class="menu-header">
+            <span class="iconify" data-icon="bxs:car"></span>
+            <span>Drivers</span>
+          </div>
+          <ul class="submenu">
+            <li onclick="this.querySelector('a').click()">
+              <a href="admin_account.html">Accounts</a>
+            </li>
+            <li onclick="this.querySelector('a').click()">
+              <a href="admin_application.html">Applications</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- BOTTOM MENU -->
+      <div class="bottom-menu">
+        <div class="menu-item">
+          <span class="iconify" data-icon="material-symbols:person"></span>
+          <span>My Profile</span>
+        </div>
+        <div class="menu-item" onclick="this.querySelector('a').click()">
+          <span class="iconify" data-icon="material-symbols:logout"></span>
+          <a href="index.html">Log Out</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-main">
+      <!-- HEADER -->
+      <header class="admin-header">
+        <h1>Driver Accounts Overview</h1>
+      </header>
+
+      <!-- STATS CARDS -->
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-icon orange">
+            <span class="iconify" data-icon="heroicons:folder-solid"></span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label"
+              >Total Number of Applications Submitted Today</span
+            >
+            <span class="stat-value">200</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <span class="iconify" data-icon="tdesign:time-filled"></span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label"
+              >Total Number of Pending Applications Today
+            </span>
+            <span class="stat-value">245</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon red">
+            <span class="iconify" data-icon="material-symbols:check-box"></span>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label"
+              >Total Number of Approved Applications Today</span
+            >
+            <span class="stat-value">14</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-header">
+        <h2>Driver Accounts List</h2>
+        <div class="table-controls">
+          <div class="sort-control">
+            <label>Sort By</label>
+            <select>
+              <option>Name</option>
+              <option>Date</option>
+              <option>Status</option>
+            </select>
+          </div>
+          <div class="status-filter">
+            <label>Status</label>
+            <select>
+              <option>All</option>
+              <option>Active</option>
+              <option>Inactive</option>
+              <option>Disabled</option>
+            </select>
+          </div>
+          <div class="search-control">
+            <span class="iconify" data-icon="material-symbols:search"></span>
+            <input type="text" placeholder="Search" />
+          </div>
+        </div>
+      </div>
+
+      <!-- DRIVER ACCOUNTS TABLE -->
+      <div class="table-container">
+        <table class="drivers-table">
+          <thead>
+            <tr>
+              <th>Driver ID</th>
+              <th>Full Name</th>
+              <th>Submitted At</th>
+              <th>Status</th>
+              <th>Remarks</th>
+              <th>Updated By</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- rows populated dynamically from DB -->
+          </tbody>
+        </table>
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+          <button class="page-btn prev">Previous</button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn next">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRIVER DETAILS MODAL -->
+    <div id="driverModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Driver Account</h3>
+          <button class="close-btn" onclick="closeModal()">
+            <span class="iconify" data-icon="mdi:close"></span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Driver Profile Section -->
+          <div class="driver-profile">
+            <div class="profile-image">
+              <img
+                src="https://scontent.fcrk3-2.fna.fbcdn.net/v/t39.30808-1/541061886_2002119353875993_4404890327560701031_n.jpg?stp=cp6_dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeH3PI-bIsYTfPsmMPRGAD3_vYdDKM5grJi9h0MozmCsmAzHLgtSUrmzUJ23V-gzc6rHs-fuTbThWgxu4SrOJn9I&_nc_ohc=n1bDQk6tSNMQ7kNvwEL0QA8&_nc_oc=AdmkerNbAYHbOWzve0SQlZYsiMSK9UMAh946SWKV-6pqxrjTKse8y0p6rMJ7I5qDyhY&_nc_zt=24&_nc_ht=scontent.fcrk3-2.fna&_nc_gid=tpLWQxDiYE6JedV3ZzrOgQ&oh=00_AfbGx1XdQzIpyDtdaEl_7XHA6RRnS1K3BRKgT3Jt0Amd1w&oe=68E07587"
+                alt="Driver Photo"
+                id="driverPhoto"
+              />
+            </div>
+            <div class="profile-info">
+              <h4 id="driverName">Jims, Librown</h4>
+              <p id="driverId">DRV-aakjau-90</p>
+              <p id="driverEmail">janehoeland5@email.com</p>
+            </div>
+          </div>
+
+          <!-- Personal Information -->
+          <div class="info-section">
+            <h5>Personal Information</h5>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Last Name</label>
+                <input type="text" id="lastName" value="Doe" readonly />
+              </div>
+              <div class="info-item">
+                <label>First Name</label>
+                <input type="text" id="firstName" value="Jane" readonly />
+              </div>
+              <div class="info-item">
+                <label>Last Name</label>
+                <input type="text" id="lastNameAlt" value="Williams" readonly />
+              </div>
+              <div class="info-item">
+                <label>Ext</label>
+                <input type="text" id="ext" value="None" readonly />
+              </div>
+              <div class="info-item">
+                <label>Birthdate</label>
+                <input
+                  type="text"
+                  id="birthdate"
+                  value="25 Sept 1996"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Gender</label>
+                <input type="text" id="gender" value="Female" readonly />
+              </div>
+              <div class="info-item full-width">
+                <label>Address</label>
+                <input
+                  type="text"
+                  id="address"
+                  value="4975 Transit Rd, Lancaster NY 14086"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Contact Number</label>
+                <input
+                  type="text"
+                  id="contactNumber"
+                  value="(716) 345 6789"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value="janehoeland5@email.com"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Alternative Email</label>
+                <input
+                  type="email"
+                  id="altEmail"
+                  value="janehoeland7@gmail.com"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Driver Details & Documents -->
+          <div class="info-section">
+            <h5>Driver Details & Documents</h5>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Driver Identification</label>
+                <input
+                  type="text"
+                  id="driverIdent"
+                  value="DRV-aakjau-90"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Date Joined</label>
+                <input
+                  type="text"
+                  id="dateJoined"
+                  value="20 Sept 2025"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Driver's License Number</label>
+                <input
+                  type="text"
+                  id="licenseNumber"
+                  value="012-34-567890"
+                  readonly
+                />
+              </div>
+              <div class="info-item">
+                <label>Driver's License Expiry Date</label>
+                <input
+                  type="text"
+                  id="licenseExpiry"
+                  value="20 Dec 2027"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <!-- Document Links -->
+            <div class="document-section">
+              <div class="document-item">
+                <label>Driver's License Photo</label>
+                <div class="document-link">
+                  <span>license-john-doe-a27km.png</span>
+                  <button class="view-btn">
+                    <span class="iconify" data-icon="mdi:eye"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="document-item">
+                <label>NBI Clearance</label>
+                <div class="document-link">
+                  <span>clearance-john-doe-mnq904.png</span>
+                  <button class="view-btn">
+                    <span class="iconify" data-icon="mdi:eye"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="document-item">
+                <label>Proof of Address</label>
+                <div class="document-link">
+                  <span>proof-of-add2-john-doe-anduaoxja54.png</span>
+                  <button class="view-btn">
+                    <span class="iconify" data-icon="mdi:eye"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="document-item">
+                <label>2×2 ID Picture</label>
+                <div class="document-link">
+                  <span>id-pic-john-doe-loqk95.png</span>
+                  <button class="view-btn">
+                    <span class="iconify" data-icon="mdi:eye"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Status Application</label>
+                  <input
+                    type="text"
+                    id="driverIdent"
+                    value="Pending"
+                    readonly
+                  />
+                </div>
+                <div class="info-item">
+                  <label>Submitted At</label>
+                  <input
+                    type="text"
+                    id="dateJoined"
+                    value="20 Sept 2025"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="approve-btn">Approve</button>
+          <button class="reject-btn">Reject</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
++      // fetch application stats for today and populate stat cards
++      async function fetchApplicationStats() {
+      try {
+        const res = await fetch('/php/get_application_stats.php');
+        if (!res.ok) throw new Error('Failed to load application stats');
+       const data = await res.json();
+         document.getElementById('appSubmittedToday').textContent = data.submitted_today ?? '0';
+         document.getElementById('appPendingToday').textContent = data.pending_today ?? '0';
+         document.getElementById('appApprovedToday').textContent = data.approved_today ?? '0';
+      } catch (err) {
+          console.error('fetchApplicationStats', err);
+      }
+     }
+
+       // load applications from PHP and wire modal + approve/reject
+       async function fetchApplications() {
+         try {
+           const res = await fetch('/php/get_applications.php');
+           if (!res.ok) throw new Error('Failed to load');
+           const apps = await res.json();
+           const tbody = document.querySelector('.drivers-table tbody');
+           tbody.innerHTML = '';
+           apps.forEach(a => {
+             const tr = document.createElement('tr');
+             tr.innerHTML = `
+               <td>${a.id}</td>
+               <td><div class="driver-info"><span>${a.full_name || ''}</span></div></td>
+               <td>${a.submitted_at ? new Date(a.submitted_at).toLocaleString() : ''}</td>
+               <td><span class="status-badge ${(a.status||'').toLowerCase()}">${a.status || ''}</span></td>
+               <td><p>${a.remarks || ''}</p></td>
+               <td>${a.updated_by || ''}</td>
+               <td>
+                 <button class="view-btn" data-id="${a.id}">View</button>
+               </td>
+             `;
+             tbody.appendChild(tr);
+           });
+ 
+           document.querySelectorAll('.view-btn').forEach(btn => {
+             btn.addEventListener('click', async () => {
+               const id = btn.dataset.id;
+               let data;
+               try {
+                 const r = await fetch(`/php/get_application.php?id=${encodeURIComponent(id)}`);
+                 data = r.ok ? await r.json() : null;
+               } catch (e) {
+                 console.error(e);
+               }
+               openAppModal(data || { id, full_name: btn.closest('tr').querySelector('.driver-info span')?.textContent || '' });
+             });
+           });
+         } catch (err) {
+           console.error(err);
+         }
+       }
+ 
+       function openAppModal(app) {
+         // same modal creation / population as before but use 'app' object
+         let modal = document.getElementById('appModal');
+         if (!modal) {
+           // create modal (same markup as prior implementation)
+           modal = document.createElement('div');
+           modal.id = 'appModal';
+           modal.style.position = 'fixed';
+           modal.style.inset = '0';
+           modal.style.display = 'flex';
+           modal.style.alignItems = 'center';
+           modal.style.justifyContent = 'center';
+           modal.style.background = 'rgba(0,0,0,0.5)';
+           modal.style.zIndex = '9999';
+           modal.innerHTML = `
+             <div style="background:#fff;max-width:720px;width:90%;border-radius:8px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,0.2)">
+               <div style="display:flex;justify-content:space-between;align-items:center">
+                 <h3 id="appTitle">Application</h3>
+                 <button id="appClose">✕</button>
+               </div>
+               <div style="margin-top:8px">
+                 <p><strong>ID:</strong> <span id="appId"></span></p>
+                 <p><strong>Name:</strong> <span id="appName"></span></p>
+                 <p><strong>Submitted At:</strong> <span id="appSubmitted"></span></p>
+                 <p><strong>Status:</strong> <span id="appStatus"></span></p>
+                 <p><strong>Remarks:</strong></p>
+                 <textarea id="appRemarks" style="width:100%;min-height:80px"></textarea>
+                 <p style="margin-top:8px"><strong>Updated By:</strong> <span id="appUpdatedBy"></span></p>
+               </div>
+               <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+                 <button id="rejectBtn" style="background:#e74c3c;color:#fff;padding:8px 12px;border:none;border-radius:4px">Reject</button>
+                 <button id="approveBtn" style="background:#2ecc71;color:#fff;padding:8px 12px;border:none;border-radius:4px">Approve</button>
+               </div>
+             </div>
+           `;
+           document.body.appendChild(modal);
+           modal.querySelector('#appClose').addEventListener('click', () => closeAppModal());
+           modal.addEventListener('click', (e) => { if (e.target === modal) closeAppModal(); });
+         }
+ 
+         document.getElementById('appId').textContent = app.id || '';
+         document.getElementById('appName').textContent = app.full_name || '';
+         document.getElementById('appSubmitted').textContent = app.submitted_at ? new Date(app.submitted_at).toLocaleString() : '';
+         document.getElementById('appStatus').textContent = app.status || '';
+         document.getElementById('appRemarks').value = app.remarks || '';
+         document.getElementById('appUpdatedBy').textContent = app.updated_by || '';
+ 
+         const approveBtn = document.getElementById('approveBtn');
+         const rejectBtn = document.getElementById('rejectBtn');
+ 
+         approveBtn.onclick = async () => {
+           approveBtn.disabled = true;
+           try {
+             const r = await fetch(`/php/application_approve.php?id=${encodeURIComponent(app.id)}`, {
+               method: 'POST',
+               headers: {'Content-Type':'application/json'},
+               body: JSON.stringify({ updatedBy: 'admin' })
+             });
+             if (!r.ok) throw new Error('Approve failed');
+             await fetchApplications();
+             await fetchApplicationStats();
+             closeAppModal();
+           } catch (e) {
+             console.error(e);
+             approveBtn.disabled = false;
+           }
+         };
+ 
+         rejectBtn.onclick = async () => {
+           rejectBtn.disabled = true;
+           try {
+             const remarks = document.getElementById('appRemarks').value;
+             const r = await fetch(`/php/application_reject.php?id=${encodeURIComponent(app.id)}`, {
+               method: 'POST',
+               headers: {'Content-Type':'application/json'},
+               body: JSON.stringify({ remarks, updatedBy: 'admin' })
+             });
+             if (!r.ok) throw new Error('Reject failed');
+             await fetchApplications();
+             await fetchApplicationStats();
+             closeAppModal();
+           } catch (e) {
+             console.error(e);
+             rejectBtn.disabled = false;
+           }
+         };
+ 
+         modal.style.display = 'flex';
+       }
+ 
+       function closeAppModal() {
+         const modal = document.getElementById('appModal');
+         if (modal) modal.style.display = 'none';
+       }
+ 
+       document.addEventListener('DOMContentLoaded', () => {
++        fetchApplicationStats();
+         fetchApplications();
+       });
+     </script>
+  </body>
+</html>
